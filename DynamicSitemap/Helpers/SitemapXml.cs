@@ -8,13 +8,13 @@ namespace DynamicSitemap.Helpers
 {
     public class SitemapXml
     {
-        public Classes.Utils.Sitemap Sitemap { get; set; }
+        public Classes.Utils.Sitemap? Sitemap { get; set; }
 
         private class WebPage
         {
-            public string Domain { get; set; }
-            public string Prefix { get; set; }
-            public string Path { get; set; }
+            public string? Domain { get; set; }
+            public string? Prefix { get; set; }
+            public string? Path { get; set; }
         }
 
         public string Generate()

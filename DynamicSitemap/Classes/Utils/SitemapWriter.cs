@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,63 +9,37 @@ namespace DynamicSitemap.Classes.Utils
     [XmlRoot("urlset", Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")]
     public class Sitemap
     {
-        private ArrayList map;
+        private List<SitemapLocation> map;
 
         public Sitemap()
         {
-            map = new ArrayList();
+            map = new List<SitemapLocation>();
         }
 
         [XmlElement("url")]
-        public SitemapLocation[] Locations
+        public List<SitemapLocation> Locations
         {
             get
             {
-                SitemapLocation[] items = new SitemapLocation[map.Count];
-                map.CopyTo(items);
-                return items;
+                return map;
             }
             set
             {
                 if (value == null)
                     return;
-                SitemapLocation[] items = (SitemapLocation[])value;
-                map.Clear();
-                foreach (SitemapLocation item in items)
-                    map.Add(item);
+                map = value;
             }
-        }
-
-        public string GetSitemapXml()
-        {
-            return string.Empty;
         }
 
         public int Add(SitemapLocation item)
         {
-            return map.Add(item);
+            map.Add(item);
+            return map.Count;
         }
 
         public void AddRange(IEnumerable<SitemapLocation> locs)
         {
-            foreach (var i in locs)
-            {
-                map.Add(i);
-            }
-        }
-
-        public void WriteSitemapToFile(string path)
-        {
-
-            using (FileStream fs = new FileStream(path, FileMode.Create))
-            {
-
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                ns.Add("image", "http://www.google.com/schemas/sitemap-image/1.1");
-
-                XmlSerializer xs = new XmlSerializer(typeof(Sitemap));
-                xs.Serialize(fs, this, ns);
-            }
+            map.AddRange(locs);
         }
 
         public string WriteSitemapToString()
@@ -81,13 +55,25 @@ namespace DynamicSitemap.Classes.Utils
             }
         }
 
-        public class Utf8StringWriter : StringWriter
+        public void WriteSitemapToFile(string path)
         {
-            // Override UTF-16, UTF-8 is required for google to pick up a sitemap
-            public override Encoding Encoding
+            using (FileStream fs = new FileStream(path, FileMode.Create))
             {
-                get { return new UTF8Encoding(false); }
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("image", "http://www.google.com/schemas/sitemap-image/1.1");
+
+                XmlSerializer xs = new XmlSerializer(typeof(Sitemap));
+                xs.Serialize(fs, this, ns);
             }
         }
-    }
+
+    //    Override UTF-16 as google wont work without UTF-8
+        public class Utf8StringWriter : StringWriter
+            {
+                public override Encoding Encoding
+                {
+                    get { return new UTF8Encoding(false); }
+                }
+            }
+        }
 }
