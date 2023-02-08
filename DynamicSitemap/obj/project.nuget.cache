@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "uEd5EOwZmVQ+a+0jGQC2eCs5SH+yhm+7yKDwMLkHu+LXTMM4R4MJaN8NztSAQCDHjlCCElO9sCuN1h8fT4LUdQ==",
+  "success": true,
+  "projectFilePath": "E:\\VS CODE\\DynamicSitemap\\DynamicSitemap\\DynamicSitemap.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://iwcswdevops/SoftwareDevelopment/_packaging/IWC.Packages/nuget/v3/index.json'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}
