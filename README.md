@@ -44,7 +44,7 @@ foreach (var item in classData)
 It is also possible to call a list of the websites page or component endpoints.
 
 ```cs
- // Get all the components wich are not dynamic who have a base class of ComponentBase
+ // Get all the components which are not dynamic who have a base class of ComponentBase
  
 var components = Assembly.GetExecutingAssembly().ExportedTypes.Where(t => typeof(ComponentBase).IsAssignableFrom(t)).ToList();
 var routables = components.Where(c => c.GetCustomAttributes(inherit: true).OfType<RouteAttribute>().Any());
